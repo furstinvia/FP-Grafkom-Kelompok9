@@ -75,12 +75,12 @@
         if (isPlaying) {
           audioElement.pause();
           audioElement.currentTime = 0;
-          audioToggleButton.innerHTML = '<i class="fa fa-volume-up"></i>';
+          audioToggleButton.innerHTML = '<i class="fa fa-volume-mute"></i>';
         } else {
           audioElement.play().catch((e) => {
             console.error("Audio play failed:", e);
           });
-          audioToggleButton.innerHTML = '<i class="fa fa-volume-mute"></i>';
+          audioToggleButton.innerHTML = '<i class="fa fa-volume-up"></i>';
         }
         isPlaying = !isPlaying;
       });

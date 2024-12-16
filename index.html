@@ -4,66 +4,224 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animal Crossing Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/622afd0c30.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap'); 
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
         html, body {
-            height: 100%; 
-            margin: 0; 
-            position: relative; 
-        }
-        body { 
-            background-image: url('img/animal.png'); 
-            background-size: cover; 
-            background-position: center; 
-            background-repeat: no-repeat; 
-            overflow: hidden; 
-            font-family: 'Anton', sans-serif; 
+            height: 100%;
+            margin: 0;
+            position: relative;
         }
 
-        .play-button, .characters-button, .rules-button {
-            position: absolute;
-            left: 50%;
-            padding: 15px 30px;
-            font-size: 26px; 
-            background: linear-gradient(to right, #ff4b8b, #ff69b4); 
-            color: white; 
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
-            transform: translateX(-50%); 
-            font-weight: bold;
+        body {
+            background-image: url('img/animal.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            font-family: 'VT323', monospace; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: url('img/point.png'), auto;
         }
 
-        .play-button:hover, .characters-button:hover, .rules-button:hover {
-            background: linear-gradient(to right, #ff69b4, #ff4b8b); 
-            transform: translateX(-50%) scale(1.1); 
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); 
+        button, .play-button img {
+            cursor: url('img/click.png'), pointer;
         }
 
-        .play-button:active, .characters-button:active, .rules-button:active {
-            transform: translateX(-50%) scale(1.15); 
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);  
-        }
-
-        .characters-button {
-            bottom: 250px;
-        }
-
-        .rules-button {
-            bottom: 165px; 
+        .buttons-container {
+            top: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            gap: 50px;
         }
 
         .play-button {
-            bottom: 80px; 
+            padding: 0;
+            border: none;
+            background: none;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 6px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            position: relative;
+            transition: transform 0.2s ease-in-out;
+            overflow: hidden;
         }
+
+        .play-button img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .play-button:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .play-button:hover img {
+            transform: scale(1.1);
+        }
+
+        .play-button::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255,255,255,0.6) 10%, transparent 80%);
+            opacity: 0.6;
+            animation: shimmer 2s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translate(-100%, -100%) rotate(45deg);
+            }
+            100% {
+                transform: translate(100%, 100%) rotate(45deg);
+            }
+        }
+
+        .characters-button, .rules-button {
+            padding: 14px 24px;
+            font-size: 32px; 
+            font-family: 'VT323', monospace; 
+            background: linear-gradient(145deg, #ff4b8b, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            line-height: 1.2; 
+            box-shadow: inset -3px -3px 6px rgba(255, 255, 255, 0.6), 6px 6px 12px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .characters-button:hover, .rules-button:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .characters-button:active, .rules-button:active {
+            transform: translateY(5px);
+            box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .characters-button::after, .rules-button::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+            opacity: 0.7;
+            transform: rotate(45deg);
+            animation: shimmer 2.5s infinite;
+        }
+
+        .characters-button {
+            position: absolute;
+            left: 25%;
+        }
+
+        .rules-button {
+            position: absolute;
+            right: 28.5%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            position: relative;
+            font-family: 'VT323', monospace; 
+            background-image: url('img/animal.gif');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        #musicControls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            }
+
+            #musicControls button {
+            width: 50px;
+            height: 50px;
+            background-color: #ff69b4; 
+            border: none;
+            border-radius: 50%; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+            #musicControls button:hover {
+            background-color: #ff85c4; 
+            }
+
+            #musicControls button:active {
+            background-color: #ff4fa0; 
+            }
+
     </style>
 </head>
 <body>
-    <button class="characters-button" onclick="window.location.href='Characters/index.html'">🦊 Characters</button>
-    <button class="rules-button" onclick="window.location.href='rules/index.html'">📜 Rules</button>
-    <button class="play-button" onclick="window.location.href='Game/index.html'">▶️ Play</button>
+    <div id="musicControls">
+        <button id="audioToggleButton">
+            <i class="fa fa-volume-up"></i>
+        </button>
+    </div>
+
+    <audio id="backgroundMusic" src="Game/view.m4a" loop></audio>
+
+    <div class="buttons-container">
+        <button class="characters-button" onclick="window.location.href='Characters/index.html'">🦊 Characters</button>
+        <button class="play-button" onclick="window.location.href='Game/index.html'">
+            <img src="img/play.png" alt="Play">
+        </button>
+        <button class="rules-button" onclick="window.location.href='rules/index.html'">📜 Rules</button>
+    </div>
+
+    <script>
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const audioToggleButton = document.getElementById('audioToggleButton');
+        const audioIcon = audioToggleButton.querySelector('i');
+
+        window.addEventListener('load', () => {
+            backgroundMusic.play();
+        });
+
+        audioToggleButton.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                audioIcon.classList.remove('fa-volume-mute');
+                audioIcon.classList.add('fa-volume-up');
+            } else {
+                backgroundMusic.pause();
+                audioIcon.classList.remove('fa-volume-up');
+                audioIcon.classList.add('fa-volume-mute');
+            }
+        });
+    </script>
 </body>
 </html>

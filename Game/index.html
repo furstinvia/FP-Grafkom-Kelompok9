@@ -69,21 +69,34 @@
       const audioElement = document.getElementById("retroAudio");
       const audioToggleButton = document.getElementById("audioToggleButton");
 
-      let isPlaying = false;
+      let isPlaying = true;
+
+      function playAudio() {
+        audioElement
+          .play()
+          .then(() => {
+            isPlaying = true;
+            audioToggleButton.innerHTML = '<i class="fa fa-volume-up"></i>';
+          })
+          .catch((e) => {
+            console.error("Audio auto-play failed:", e);
+            isPlaying = false;
+            audioToggleButton.innerHTML = '<i class="fa fa-volume-mute"></i>';
+          });
+      }
+
+      playAudio();
 
       audioToggleButton.addEventListener("click", () => {
         if (isPlaying) {
           audioElement.pause();
-          audioElement.currentTime = 0;
           audioToggleButton.innerHTML = '<i class="fa fa-volume-mute"></i>';
         } else {
-          audioElement.play().catch((e) => {
-            console.error("Audio play failed:", e);
-          });
-          audioToggleButton.innerHTML = '<i class="fa fa-volume-up"></i>';
+          playAudio();
         }
         isPlaying = !isPlaying;
       });
+
 
       const selectedCharacter = localStorage.getItem("selectedCharacter");
       if (selectedCharacter) {
@@ -101,6 +114,40 @@
         scriptElement.id = "characterScript";
         document.body.appendChild(scriptElement);
       }
+      let seconds = 0;
+      let minutes = 0;
+      let timer;
+
+      function startTimer() {
+        timer = setInterval(updateTimer, 1000);
+      }
+
+      function updateTimer() {
+        seconds++;
+        if (seconds === 60) {
+          seconds = 0;
+          minutes++;
+        }
+        const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
+        const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+        document.getElementById("timerDisplay").textContent = `${displayMinutes}:${displaySeconds}`;
+      }
+
+      function resetTimer() {
+        clearInterval(timer);
+        seconds = 0;
+        minutes = 0;
+        document.getElementById("timerDisplay").textContent = "00:00";
+        startTimer();
+      }
+
+      window.onload = function() {
+        startTimer();
+      };
+
+      document.getElementById("retry").addEventListener("click", function() {
+        resetTimer();
+      });
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>

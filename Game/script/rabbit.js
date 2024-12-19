@@ -746,6 +746,12 @@ function move(direction) {
   moves.push(direction);
 }
 
+const crashSound = new Audio("crash.mp3");
+function playCrashSound() {
+  crashSound.currentTime = 0;
+  crashSound.volume = 1.0; 
+  crashSound.play().catch((e) => console.error("Audio play failed:", e));
+}
 function animate(timestamp) {
   requestAnimationFrame(animate);
 
@@ -871,6 +877,7 @@ function animate(timestamp) {
       const carMinX = vechicle.position.x - (vechicleLength * zoom) / 2;
       const carMaxX = vechicle.position.x + (vechicleLength * zoom) / 2;
       if (chickenMaxX > carMinX && chickenMinX < carMaxX) {
+        playCrashSound();
         gameOver = true;
         endDOM.style.visibility = "visible";
       }

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/622afd0c30.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            position: relative;
+        }
+
+        body {
+            background-image: url('img/rules.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            font-family: 'VT323', monospace; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: url('img/point.png'), auto;
+        }
+
+        .buttons-container {
+            top: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            gap: 50px;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translate(-100%, -100%) rotate(45deg);
+            }
+            100% {
+                transform: translate(100%, 100%) rotate(45deg);
+            }
+        }
+
+        .back-button{
+            margin-top: -15px;
+            padding: 14px 24px;
+            font-size: 32px; 
+            font-family: 'VT323', monospace; 
+            background: linear-gradient(145deg, #ff4b8b, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            line-height: 1.2; 
+            box-shadow: inset -3px -3px 6px rgba(255, 255, 255, 0.6), 6px 6px 12px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:active{
+            transform: translateY(5px);
+            box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+            opacity: 0.7;
+            transform: rotate(45deg);
+            animation: shimmer 2.5s infinite;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            position: relative;
+            font-family: 'VT323', monospace; 
+            background-image: url("../img/rules.gif");
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        #musicControls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            }
+
+            #musicControls button {
+            width: 50px;
+            height: 50px;
+            background-color: #ff69b4; 
+            border: none;
+            border-radius: 50%; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+            #musicControls button:hover {
+            background-color: #ff85c4; 
+            }
+
+            #musicControls button:active {
+            background-color: #ff4fa0; 
+            }
+
+    </style>
+</head>
+<body>
+    <div id="musicControls">
+        <button id="audioToggleButton">
+            <i class="fa fa-volume-up"></i>
+        </button>
+    </div>
+
+    <audio id="backgroundMusic" src="../Game/view.m4a" loop></audio>
+
+    <div class="buttons-container">
+        <button class="back-button" onclick="window.location.href='../index.html'">Back</button>    </div>
+
+    <script>
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const audioToggleButton = document.getElementById('audioToggleButton');
+        const audioIcon = audioToggleButton.querySelector('i');
+
+        window.addEventListener('load', () => {
+            backgroundMusic.play();
+        });
+
+        audioToggleButton.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                audioIcon.classList.remove('fa-volume-mute');
+                audioIcon.classList.add('fa-volume-up');
+            } else {
+                backgroundMusic.pause();
+                audioIcon.classList.remove('fa-volume-up');
+                audioIcon.classList.add('fa-volume-mute');
+            }
+        });
+    </script>
+</body>
+</html>

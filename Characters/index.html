@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Characters</title>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.module.js",
+                "three/examples/jsm/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/loaders/GLTFLoader.js",
+                "three/examples/jsm/controls/OrbitControls.js": "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/controls/OrbitControls.js"
+            }
+        }
+        </script>
+        <script type="module" src="script.js"></script>
     <script src="https://kit.fontawesome.com/622afd0c30.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
@@ -253,8 +263,6 @@
                 transform: translateY(2px);
                 box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
             }
-
-
     </style>
 </head>
 <body>
@@ -280,7 +288,7 @@
         </select>
         <button class="button" id="nextBtn">Next</button>
         <button class="button" id="selectBtn">Select</button>
-        <button class="play-button" id="playBtn"></button>
+        <button class="play-button" id="playBtn" onclick="window.location.href='../Game/index.html'"></button>
     </div>
 
     <div class="popup-modal" id="popupModal">
@@ -293,7 +301,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="script.js"></script>
-
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.module.js';
+        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/controls/OrbitControls.js';
+    
+        // Tambahkan kode Anda di sini
+    </script>
 </body>
 </html>

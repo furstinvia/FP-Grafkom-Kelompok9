@@ -13,7 +13,6 @@ button {
   cursor: pointer;
   border: none;
 }
-
 #score-time-wrapper {
   position: absolute;
   top: 20px;
@@ -22,39 +21,122 @@ button {
   flex-direction: row;
   gap: 20px;
   align-items: center;
+  padding: 9px;
+  box-shadow: none; /* Menghapus shadow */
+  background: none; /* Menghapus background */
+  border-radius: 0; /* Menghapus border radius */
 }
+
 
 #score {
-  background-color: #ff69b4;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background: linear-gradient(145deg, #fb74b8, #ff4b8b);
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 1em;
 }
 
-#counter {
+#counter, #timerDisplay {
   font-weight: bold;
+  font-size: 1em;
+  color: #ffffff;
+  margin-top: 5px;
 }
-
-#timerDisplay {
-  font-weight: bold;
-}
-
 #end {
   position: absolute;
-  min-width: 100%;
-  min-height: 100%;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  visibility: hidden;
+  background-image: url('../img/smoke.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;  visibility: hidden;
+  flex-direction: column;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5); /* Warna hitam semi-transparan */
+  background-blend-mode: multiply; /* Mencampur warna hitam dengan gambar */
 }
-#end button {
-  background-color: rgb(231, 50, 18);
-  padding: 20px 50px 20px 50px;
+#dizzy-container {
+  position: absolute;
+  top: -50px; /* Mengangkat container ke atas konten */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 100px;
+  border-radius: 50%; /* Membuat bentuk bulat */
+  overflow: hidden; /* Memastikan gambar tetap di dalam lingkaran */
+  border: 3px solid rgba(231, 125, 141, 0.8); /* Border pink transparan */
+  box-shadow: 0 6px 15px rgba(185, 13, 99, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  background: linear-gradient(145deg, #c12978, #f389c7); /* Gradasi latar belakang jika gambar gagal dimuat */
+}
+
+#dizzy-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Mengisi container tanpa distorsi */
+  position: relative; 
+  top: 15%;
+}
+
+#end-content {
+  position: relative;
+  text-align: center;
+  background: linear-gradient(145deg, #ff85c4, #ffa3d8); /* Gradasi pink */
+  padding: 50px 30px 30px; /* Ruang tambahan untuk container bulat */
+  border-radius: 20px; /* Border melengkung lembut */
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5); /* Bayangan pink */
+  animation: fadeIn 1s ease-in-out;
+  border: 3px solid rgba(255, 182, 193, 0.8); /* Border pink transparan */
+}
+
+
+#end-content h1 {
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  color: #e91e63; /* Pink cerah */
+  text-shadow: 2px 2px 5px rgba(87, 2, 2, 0.5); /* Efek bayangan untuk teks */
+}
+
+#end-content p {
+  margin: 15px 0;
+  font-size: 1.3rem;
+  color: white;
+}
+
+#end-content button {
+  background-color: #ff69b4; /* Warna pink cerah */
+  padding: 15px 25px;
   font-family: inherit;
-  font-size: inherit;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid #ff85c4; /* Border pink lebih terang */
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(255, 105, 180, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.3);
   animation: colorPop 2s linear infinite;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
+
+#end-content button:hover {
+  background-color: #ff85c4;
+  box-shadow: 0 12px 25px rgba(255, 182, 193, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+#end-content button:active {
+  background-color: #ff4fa0;
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
+}
+
 #controls {
   position: absolute;
   min-width: 100%;
@@ -75,10 +157,33 @@ button {
 #controls button {
   width: 100%;
   background-color: #ff69b4;
-  border-radius: 3px;
+  border-radius: 8px;
+  border: 3px solid #ff85c4;
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  box-shadow: 0 8px 15px rgba(255, 105, 180, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
+#controls button svg {
+  fill: white;
+  transition: transform 0.2s;
+}
+
+#controls button:hover {
+  background-color: #ff85c4;
+  box-shadow: 0 12px 20px rgba(255, 105, 180, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px);
+}
+
+#controls button:active {
+  background-color: #ff4fa0;
+  box-shadow: 0 6px 10px rgba(255, 105, 180, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.3);
+  transform: translateY(2px);
+}
+
 #controls button:first-of-type {
-  grid-column: 1/-1;
+  grid-column: 1 / -1;
 }
 
 .credits {

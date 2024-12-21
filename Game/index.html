@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Safari Crossing</title>
+    <title>Animal Crossing</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="icon" href="./favicon.ico" />
 
@@ -48,15 +48,23 @@
     </div>
 
     <div id="end">
-      <button id="retry">Play Again?</button>
+      <div id="end-content">
+        <div id="dizzy-container">
+          <img src="../img/dizzy.gif" alt="Dizzy animation" />
+        </div>
+        <h1>Game Over!</h1>
+        <p id="final-score"></p>
+        <p id="final-time"></p>
+        <button id="retry">Play Again?</button>
+      </div>
     </div>
+    
+    
 
     <audio id="retroAudio" loop>
       <source src="retro.mp3" type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
-
-    <audio id="crashSound" src="crash.mp3" preload="auto"></audio>
 
     <div id="musicControls">
       <button id="audioToggleButton">
@@ -71,34 +79,21 @@
       const audioElement = document.getElementById("retroAudio");
       const audioToggleButton = document.getElementById("audioToggleButton");
 
-      let isPlaying = true;
-
-      function playAudio() {
-        audioElement
-          .play()
-          .then(() => {
-            isPlaying = true;
-            audioToggleButton.innerHTML = '<i class="fa fa-volume-up"></i>';
-          })
-          .catch((e) => {
-            console.error("Audio auto-play failed:", e);
-            isPlaying = false;
-            audioToggleButton.innerHTML = '<i class="fa fa-volume-mute"></i>';
-          });
-      }
-
-      playAudio();
+      let isPlaying = false;
 
       audioToggleButton.addEventListener("click", () => {
         if (isPlaying) {
           audioElement.pause();
+          audioElement.currentTime = 0;
           audioToggleButton.innerHTML = '<i class="fa fa-volume-mute"></i>';
         } else {
-          playAudio();
+          audioElement.play().catch((e) => {
+            console.error("Audio play failed:", e);
+          });
+          audioToggleButton.innerHTML = '<i class="fa fa-volume-up"></i>';
         }
         isPlaying = !isPlaying;
       });
-
 
       const selectedCharacter = localStorage.getItem("selectedCharacter");
       if (selectedCharacter) {
@@ -116,40 +111,7 @@
         scriptElement.id = "characterScript";
         document.body.appendChild(scriptElement);
       }
-      let seconds = 0;
-      let minutes = 0;
-      let timer;
-
-      function startTimer() {
-        timer = setInterval(updateTimer, 1000);
-      }
-
-      function updateTimer() {
-        seconds++;
-        if (seconds === 60) {
-          seconds = 0;
-          minutes++;
-        }
-        const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
-        const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
-        document.getElementById("timerDisplay").textContent = `${displayMinutes}:${displaySeconds}`;
-      }
-
-      function resetTimer() {
-        clearInterval(timer);
-        seconds = 0;
-        minutes = 0;
-        document.getElementById("timerDisplay").textContent = "00:00";
-        startTimer();
-      }
-
-      window.onload = function() {
-        startTimer();
-      };
-
-      document.getElementById("retry").addEventListener("click", function() {
-        resetTimer();
-      });
+      
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>

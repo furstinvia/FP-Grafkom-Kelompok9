@@ -877,8 +877,22 @@ function animate(timestamp) {
       const carMinX = vechicle.position.x - (vechicleLength * zoom) / 2;
       const carMaxX = vechicle.position.x + (vechicleLength * zoom) / 2;
       if (chickenMaxX > carMinX && chickenMinX < carMaxX) {
+        function showEndPopup() {
+          const finalScore = document.getElementById("final-score");
+          const finalTime = document.getElementById("final-time");
+          const endDOM = document.getElementById("end");
+        
+          // Tampilkan hasil skor dan waktu
+          finalScore.innerText = `Final Score: ${document.getElementById("counter").innerText}`;
+          finalTime.innerText = `Final Time: ${document.getElementById("timerDisplay").innerText}`;
+        
+          // Tampilkan popup
+          endDOM.style.visibility = "visible";
+        }
         playCrashSound();
         gameOver = true;
+        stopTimer();
+        showEndPopup();
         endDOM.style.visibility = "visible";
       }
     });

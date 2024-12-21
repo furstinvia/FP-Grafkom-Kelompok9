@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Load 3D GLB</title>
+    <title>Characters</title>
+    <script src="https://kit.fontawesome.com/622afd0c30.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
         body { 
             margin: 0; 
             position: relative; 
-            background-image: url('../img/characters.png');
+            background-image: url('../img/characters.gif');
             background-size: cover;
             background-position: center;
             overflow: hidden;
@@ -22,6 +25,15 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
         .button-container {
             position: absolute;
             bottom: 40px;
@@ -37,37 +49,228 @@
             border: none;
             border-radius: 25px;
             padding: 15px 30px;
-            font-size: 26px;
+            font-size: 30px;
+            font-family: 'VT323', monospace;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: background 0.3s, transform 0.2s ease, box-shadow 0.3s ease;
             width: 190px;
             font-weight: bold;
+            position: relative;
+            overflow: hidden;
         }
         .button:hover {
-            background: linear-gradient(to right, #ff69b4, #ff4b8b);
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        transform: translateY(-10px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.2);
         }
+
         .button:active {
-            background: linear-gradient(to right, #ff2d76, #ff69b4);
-            transform: scale(1.1);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            transform: translateY(5px);
+            box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .button::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+            opacity: 0.7;
+            transform: rotate(45deg);
+            animation: shimmer 2.5s infinite;
+        }
+
+        #modelSelect {
+            background-color: #ff69b4;
+            color: white;
+            font-size: 30px;
+            padding: 15px 30px;
+            font-family: 'VT323', monospace;
+            border: 2px solid #ff4b8b;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 190px;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        #modelSelect::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.2) 100%);
+            transform: translateX(-100%);
+            transition: all 0.3s ease;
+            animation: shimmer 2s infinite;
+        }
+        #modelSelect:hover::after {
+            transform: translateX(100%);
         }
         #modelSelect option {
-            background-color: white;
-            color: black;
-            font-size: 20px;
+            background-color: #ff69b4;
+            color: white;
+            font-size: 25px;
             padding: 10px;
             text-align: left;
+            border: 1px solid #ff4b8b;
         }
+
+        .popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+            z-index: 1000;
+        }
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-family: 'VT323', monospace;
+            font-size: 25px;
+            color: #333;
+        }
+        .popup-content button {
+            font-family: 'VT323', monospace;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #ff69b4;
+            color: white;
+        }
+        .popup-content button:hover {
+            background-color: #ff4b8b;
+        }
+
+        .play-button {
+        width: 120px;
+        height: 120px;
+        border: none;
+        margin-left: 25px;
+        background-color: transparent;
+        cursor: pointer;
+        background-image: url('../img/play.png');
+        background-size: cover;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .play-button:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .play-button:active {
+        transform: translateY(5px);
+        box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .play-button::after {
+        content: '';
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        width: 300%;
+        height: 300%;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+        opacity: 0.7;
+        transform: rotate(45deg);
+        animation: shimmer 2.5s infinite;
+    }
+    #musicControls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            }
+
+            #musicControls button {
+            width: 50px;
+            height: 50px;
+            background-color: #ff69b4; 
+            border: none;
+            border-radius: 50%; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+            #musicControls button:hover {
+            background-color: #ff85c4; 
+            }
+
+            #musicControls button:active {
+            background-color: #ff4fa0; 
+            }
+            #backButton {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            background-color: #ff4b8b;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 26px;
+            font-family: 'VT323', monospace;
+            border-radius: 20px;
+            padding: 8px 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s, transform 0.2s ease, box-shadow 0.3s ease;
+            }
+            #backButton i {
+                font-size: 16px;
+            }
+            #backButton:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+            #backButton:active {
+                transform: translateY(2px);
+                box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+            }
+
+
     </style>
 </head>
 <body>
-    
+    <div id="musicControls">
+        <button id="audioToggleButton">
+            <i class="fa fa-volume-up"></i>
+        </button>
+        <a href="../index.html" id="backButton" class="button">
+            <i class="fa fa-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <audio id="backgroundMusic" src="../Game/view.m4a" loop></audio>
+
     <div class="button-container">
         <button class="button" id="prevBtn">Previous</button>
-        <button class="button" id="nextBtn">Next</button>
         <select id="modelSelect" class="button">
             <option value="0">Cow</option>
             <option value="1">Rabbit</option>
@@ -75,8 +278,16 @@
             <option value="3">Chicken</option>
             <option value="4">Lion</option>
         </select>
+        <button class="button" id="nextBtn">Next</button>
         <button class="button" id="selectBtn">Select</button>
-        <button class="button" id="playBtn">Play</button>
+        <button class="play-button" id="playBtn"></button>
+    </div>
+
+    <div class="popup-modal" id="popupModal">
+        <div class="popup-content">
+            <p id="popupMessage">You have selected: </p>
+            <button id="closePopup">Close</button>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

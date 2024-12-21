@@ -29,54 +29,55 @@
             cursor: url('img/point.png'), auto;
         }
 
-        .buttons-container {
-            top: 150px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        html, body {
+            height: 100%;
+            margin: 0;
             position: relative;
-            width: 100%;
-            gap: 50px;
+            font-family: 'VT323', monospace; 
+            background-image: url("../img/rules.gif");
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
         }
-
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
         @keyframes shimmer {
             0% {
-                transform: translate(-100%, -100%) rotate(45deg);
+                transform: translateX(-100%);
             }
             100% {
-                transform: translate(100%, 100%) rotate(45deg);
+                transform: translateX(100%);
             }
         }
-
-        .back-button{
-            margin-top: -15px;
-            padding: 14px 24px;
-            font-size: 32px; 
-            font-family: 'VT323', monospace; 
-            background: linear-gradient(145deg, #ff4b8b, #ff69b4);
+        .button {
+            background: linear-gradient(to right, #ff4b8b, #ff69b4); 
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 30px;
+            font-family: 'VT323', monospace;
             cursor: pointer;
-            line-height: 1.2; 
-            box-shadow: inset -3px -3px 6px rgba(255, 255, 255, 0.6), 6px 6px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s, transform 0.2s ease, box-shadow 0.3s ease;
+            width: 190px;
             font-weight: bold;
-            transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
             position: relative;
             overflow: hidden;
         }
-
-        .back-button:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.2);
+        .button:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .back-button:active{
+        .button:active {
             transform: translateY(5px);
             box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .back-button::after {
+        .button::after {
             content: '';
             position: absolute;
             top: -100%;
@@ -87,17 +88,6 @@
             opacity: 0.7;
             transform: rotate(45deg);
             animation: shimmer 2.5s infinite;
-        }
-
-        html, body {
-            height: 100%;
-            margin: 0;
-            position: relative;
-            font-family: 'VT323', monospace; 
-            background-image: url("../img/rules.gif");
-            background-size: cover;
-            background-position: center;
-            overflow: hidden;
         }
 
         #musicControls {
@@ -131,7 +121,34 @@
             #musicControls button:active {
             background-color: #ff4fa0; 
             }
-
+            #backButton {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            background-color: #ff4b8b;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 26px;
+            font-family: 'VT323', monospace;
+            border-radius: 20px;
+            padding: 8px 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s, transform 0.2s ease, box-shadow 0.3s ease;
+            }
+            #backButton i {
+                font-size: 16px;
+            }
+            #backButton:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+            #backButton:active {
+                transform: translateY(2px);
+                box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+            }
     </style>
 </head>
 <body>
@@ -139,12 +156,13 @@
         <button id="audioToggleButton">
             <i class="fa fa-volume-up"></i>
         </button>
+        <a href="../index.html" id="backButton" class="button">
+            <i class="fa fa-arrow-left"></i> Back
+        </a>
     </div>
 
     <audio id="backgroundMusic" src="../Game/view.m4a" loop></audio>
 
-    <div class="buttons-container">
-        <button class="back-button" onclick="window.location.href='../index.html'">Back</button>    </div>
 
     <script>
         const backgroundMusic = document.getElementById('backgroundMusic');

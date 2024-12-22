@@ -87,13 +87,11 @@ function loadModel(path) {
                 controls.target.set(0, 0, 0);  // Fokus ke model
 
             } else if (modelName === "rabbit") {
-                currentModel.position.y -= 0.2;
-                camera.position.set(180, -0.2, 64); // Sangat maju
-                camera.fov = 6; // Perkecil FoV untuk zoom in lebih jauh
+                currentModel.position.y -= 10;
+                camera.position.set(-30, -20, 64); // Sangat maju
+                camera.fov = 108; // Perkecil FoV untuk zoom in lebih jauh
                 camera.updateProjectionMatrix(); // Terapkan perubahan FoV
                 controls.target.set(0, 0, 0);  // Fokus ke model
-                currentModel.rotation.y = Math.PI; // Putar 180 derajat
-
             }
             
             controls.update();

@@ -87,8 +87,8 @@ function loadModel(path) {
                 controls.target.set(0, 0, 0);  // Fokus ke model
 
             } else if (modelName === "rabbit") {
-                currentModel.position.y -= 10;
-                camera.position.set(-30, -20, 64); // Sangat maju
+                currentModel.position.y -= 8.5;
+                camera.position.set(-25, -20, 64); // Sangat maju
                 camera.fov = 108; // Perkecil FoV untuk zoom in lebih jauh
                 camera.updateProjectionMatrix(); // Terapkan perubahan FoV
                 controls.target.set(0, 0, 0);  // Fokus ke model

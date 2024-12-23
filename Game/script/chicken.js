@@ -4,23 +4,14 @@ const endDOM = document.getElementById("end");
 const scene = new THREE.Scene();
 
 const distance = 500;
-const camera = new THREE.OrthographicCamera(
-  window.innerWidth / -2,
-  window.innerWidth / 2,
-  window.innerHeight / 2,
-  window.innerHeight / -2,
-  0.1,
-  10000
-);
+const camera = new THREE.OrthographicCamera(window.innerWidth / -2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / -2, 0.1, 10000);
 
 camera.rotation.x = (50 * Math.PI) / 180;
 camera.rotation.y = (20 * Math.PI) / 180;
 camera.rotation.z = (10 * Math.PI) / 180;
 
 const initialCameraPositionY = -Math.tan(camera.rotation.x) * distance;
-const initialCameraPositionX =
-  Math.tan(camera.rotation.y) *
-  Math.sqrt(distance ** 2 + initialCameraPositionY ** 2);
+const initialCameraPositionX = Math.tan(camera.rotation.y) * Math.sqrt(distance ** 2 + initialCameraPositionY ** 2);
 camera.position.y = initialCameraPositionY;
 camera.position.x = initialCameraPositionX;
 camera.position.z = distance;
@@ -58,12 +49,8 @@ const carLeftSideTexture = new Texture(110, 40, [
 ]);
 
 const truckFrontTexture = new Texture(30, 30, [{ x: 15, y: 0, w: 10, h: 30 }]);
-const truckRightSideTexture = new Texture(25, 30, [
-  { x: 0, y: 15, w: 10, h: 10 },
-]);
-const truckLeftSideTexture = new Texture(25, 30, [
-  { x: 0, y: 5, w: 10, h: 10 },
-]);
+const truckRightSideTexture = new Texture(25, 30, [{ x: 0, y: 15, w: 10, h: 10 }]);
+const truckLeftSideTexture = new Texture(25, 30, [{ x: 0, y: 5, w: 10, h: 10 }]);
 
 const generateLanes = () =>
   [-9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -172,10 +159,7 @@ function Wheel() {
   const wheelTexture = textureLoader.load("assets/wheel.jpg"); // Update with the correct path to wheel.jpg
 
   // Create the wheel mesh with the texture
-  const wheel = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(12 * zoom, 33 * zoom, 12 * zoom),
-    new THREE.MeshLambertMaterial({ map: wheelTexture, flatShading: true })
-  );
+  const wheel = new THREE.Mesh(new THREE.BoxBufferGeometry(12 * zoom, 33 * zoom, 12 * zoom), new THREE.MeshLambertMaterial({ map: wheelTexture, flatShading: true }));
 
   // Set the position of the wheel
   wheel.position.z = 6 * zoom;
@@ -193,8 +177,7 @@ function getNeonPastelColor() {
     0xd9b3ff, // Neon lavender
   ];
   // Select a random neon pastel color from the array
-  const randomColor =
-    neonPastelColors[Math.floor(Math.random() * neonPastelColors.length)];
+  const randomColor = neonPastelColors[Math.floor(Math.random() * neonPastelColors.length)];
   return new THREE.Color(randomColor); // Convert to THREE.Color
 }
 
@@ -202,10 +185,7 @@ function Car() {
   const car = new THREE.Group();
   const color = getNeonPastelColor(); // Use neon pastel color for the main body
 
-  const main = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(60 * zoom, 30 * zoom, 15 * zoom),
-    new THREE.MeshPhongMaterial({ color, flatShading: true })
-  );
+  const main = new THREE.Mesh(new THREE.BoxBufferGeometry(60 * zoom, 30 * zoom, 15 * zoom), new THREE.MeshPhongMaterial({ color, flatShading: true }));
   main.position.z = 12 * zoom;
   main.castShadow = true;
   main.receiveShadow = true;
@@ -213,33 +193,30 @@ function Car() {
 
   const cabinColor = getNeonPastelColor(); // Use neon pastel color for the cabin
 
-  const cabin = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(33 * zoom, 24 * zoom, 12 * zoom),
-    [
-      new THREE.MeshPhongMaterial({
-        color: cabinColor,
-        flatShading: true,
-        map: carBackTexture,
-      }),
-      new THREE.MeshPhongMaterial({
-        color: cabinColor,
-        flatShading: true,
-        map: carFrontTexture,
-      }),
-      new THREE.MeshPhongMaterial({
-        color: cabinColor,
-        flatShading: true,
-        map: carRightSideTexture,
-      }),
-      new THREE.MeshPhongMaterial({
-        color: cabinColor,
-        flatShading: true,
-        map: carLeftSideTexture,
-      }),
-      new THREE.MeshPhongMaterial({ color: cabinColor, flatShading: true }), // top
-      new THREE.MeshPhongMaterial({ color: 0xcccccc, flatShading: true }), // bottom
-    ]
-  );
+  const cabin = new THREE.Mesh(new THREE.BoxBufferGeometry(33 * zoom, 24 * zoom, 12 * zoom), [
+    new THREE.MeshPhongMaterial({
+      color: cabinColor,
+      flatShading: true,
+      map: carBackTexture,
+    }),
+    new THREE.MeshPhongMaterial({
+      color: cabinColor,
+      flatShading: true,
+      map: carFrontTexture,
+    }),
+    new THREE.MeshPhongMaterial({
+      color: cabinColor,
+      flatShading: true,
+      map: carRightSideTexture,
+    }),
+    new THREE.MeshPhongMaterial({
+      color: cabinColor,
+      flatShading: true,
+      map: carLeftSideTexture,
+    }),
+    new THREE.MeshPhongMaterial({ color: cabinColor, flatShading: true }), // top
+    new THREE.MeshPhongMaterial({ color: 0xcccccc, flatShading: true }), // bottom
+  ]);
   cabin.position.x = 6 * zoom;
   cabin.position.z = 25.5 * zoom;
   cabin.castShadow = true;
@@ -268,46 +245,37 @@ function Truck() {
   const cargoColor = getNeonPastelColor();
   const cabinColor = getNeonPastelColor();
 
-  const base = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(100 * zoom, 25 * zoom, 5 * zoom),
-    new THREE.MeshLambertMaterial({ color: baseColor, flatShading: true })
-  );
+  const base = new THREE.Mesh(new THREE.BoxBufferGeometry(100 * zoom, 25 * zoom, 5 * zoom), new THREE.MeshLambertMaterial({ color: baseColor, flatShading: true }));
   base.position.z = 10 * zoom;
   truck.add(base);
 
-  const cargo = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(75 * zoom, 35 * zoom, 40 * zoom),
-    new THREE.MeshPhongMaterial({ color: cargoColor, flatShading: true })
-  );
+  const cargo = new THREE.Mesh(new THREE.BoxBufferGeometry(75 * zoom, 35 * zoom, 40 * zoom), new THREE.MeshPhongMaterial({ color: cargoColor, flatShading: true }));
   cargo.position.x = 15 * zoom;
   cargo.position.z = 30 * zoom;
   cargo.castShadow = true;
   cargo.receiveShadow = true;
   truck.add(cargo);
 
-  const cabin = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(25 * zoom, 30 * zoom, 30 * zoom),
-    [
-      new THREE.MeshPhongMaterial({ color: cabinColor, flatShading: true }), // back
-      new THREE.MeshPhongMaterial({
-        color: cabinColor,
-        flatShading: true,
-        map: truckFrontTexture,
-      }),
-      new THREE.MeshPhongMaterial({
-        color: cabinColor,
-        flatShading: true,
-        map: truckRightSideTexture,
-      }),
-      new THREE.MeshPhongMaterial({
-        color: cabinColor,
-        flatShading: true,
-        map: truckLeftSideTexture,
-      }),
-      new THREE.MeshPhongMaterial({ color: cabinColor, flatShading: true }), // top
-      new THREE.MeshPhongMaterial({ color: cabinColor, flatShading: true }), // bottom
-    ]
-  );
+  const cabin = new THREE.Mesh(new THREE.BoxBufferGeometry(25 * zoom, 30 * zoom, 30 * zoom), [
+    new THREE.MeshPhongMaterial({ color: cabinColor, flatShading: true }), // back
+    new THREE.MeshPhongMaterial({
+      color: cabinColor,
+      flatShading: true,
+      map: truckFrontTexture,
+    }),
+    new THREE.MeshPhongMaterial({
+      color: cabinColor,
+      flatShading: true,
+      map: truckRightSideTexture,
+    }),
+    new THREE.MeshPhongMaterial({
+      color: cabinColor,
+      flatShading: true,
+      map: truckLeftSideTexture,
+    }),
+    new THREE.MeshPhongMaterial({ color: cabinColor, flatShading: true }), // top
+    new THREE.MeshPhongMaterial({ color: cabinColor, flatShading: true }), // bottom
+  ]);
   cabin.position.x = -40 * zoom;
   cabin.position.z = 20 * zoom;
   cabin.castShadow = true;
@@ -338,10 +306,7 @@ function Three() {
   const leavesTexture = textureLoader.load("assets/leaves.avif");
 
   // Create trunk with texture
-  const trunk = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(15 * zoom, 15 * zoom, 20 * zoom),
-    new THREE.MeshPhongMaterial({ map: trunkTexture, flatShading: true })
-  );
+  const trunk = new THREE.Mesh(new THREE.BoxBufferGeometry(15 * zoom, 15 * zoom, 20 * zoom), new THREE.MeshPhongMaterial({ map: trunkTexture, flatShading: true }));
   trunk.position.z = 10 * zoom;
   trunk.castShadow = true;
   trunk.receiveShadow = true;
@@ -351,10 +316,7 @@ function Three() {
   height = threeHeights[Math.floor(Math.random() * threeHeights.length)];
 
   // Create crown with texture
-  const crown = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(30 * zoom, 30 * zoom, height * zoom),
-    new THREE.MeshLambertMaterial({ map: leavesTexture, flatShading: true })
-  );
+  const crown = new THREE.Mesh(new THREE.BoxBufferGeometry(30 * zoom, 30 * zoom, height * zoom), new THREE.MeshLambertMaterial({ map: leavesTexture, flatShading: true }));
   crown.position.z = (height / 2 + 20) * zoom;
   crown.castShadow = true;
   crown.receiveShadow = false;
@@ -412,19 +374,13 @@ function Chicken() {
   const wingDepth = 0.5 * zoom; // Wing depth
 
   // Left wing
-  const leftWing = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(wingWidth, wingHeight, wingDepth),
-    wingMaterial
-  );
+  const leftWing = new THREE.Mesh(new THREE.BoxBufferGeometry(wingWidth, wingHeight, wingDepth), wingMaterial);
   leftWing.position.set(-baseSize / 2, 0, 10 * heightFactor * zoom); // Adjust position
   leftWing.rotation.z = Math.PI / 4; // Tilt wing
   chicken.add(leftWing);
 
   // Right wing
-  const rightWing = new THREE.Mesh(
-    new THREE.BoxBufferGeometry(wingWidth, wingHeight, wingDepth),
-    wingMaterial
-  );
+  const rightWing = new THREE.Mesh(new THREE.BoxBufferGeometry(wingWidth, wingHeight, wingDepth), wingMaterial);
   rightWing.position.set(baseSize / 2, 0, 10 * heightFactor * zoom); // Adjust position
   rightWing.rotation.z = -Math.PI / 4; // Tilt wing
   chicken.add(rightWing);
@@ -469,11 +425,7 @@ function Grass() {
   // Create a section with texture
   const createSection = (texture) =>
     new THREE.Mesh(
-      new THREE.BoxBufferGeometry(
-        boardWidth * zoom,
-        positionWidth * zoom,
-        3 * zoom
-      ),
+      new THREE.BoxBufferGeometry(boardWidth * zoom, positionWidth * zoom, 3 * zoom),
       new THREE.MeshPhongMaterial({ map: texture }) // Use the texture for the material
     );
 
@@ -495,10 +447,7 @@ function Grass() {
 
 function Lane(index) {
   this.index = index;
-  this.type =
-    index <= 0
-      ? "field"
-      : laneTypes[Math.floor(Math.random() * laneTypes.length)];
+  this.type = index <= 0 ? "field" : laneTypes[Math.floor(Math.random() * laneTypes.length)];
 
   switch (this.type) {
     case "field": {
@@ -517,9 +466,7 @@ function Lane(index) {
           position = Math.floor(Math.random() * columns);
         } while (this.occupiedPositions.has(position));
         this.occupiedPositions.add(position);
-        three.position.x =
-          (position * positionWidth + positionWidth / 2) * zoom -
-          (boardWidth * zoom) / 2;
+        three.position.x = (position * positionWidth + positionWidth / 2) * zoom - (boardWidth * zoom) / 2;
         this.mesh.add(three);
         return three;
       });
@@ -537,9 +484,7 @@ function Lane(index) {
           position = Math.floor((Math.random() * columns) / 2);
         } while (occupiedPositions.has(position));
         occupiedPositions.add(position);
-        vechicle.position.x =
-          (position * positionWidth * 2 + positionWidth / 2) * zoom -
-          (boardWidth * zoom) / 2;
+        vechicle.position.x = (position * positionWidth * 2 + positionWidth / 2) * zoom - (boardWidth * zoom) / 2;
         if (!this.direction) vechicle.rotation.z = Math.PI;
         this.mesh.add(vechicle);
         return vechicle;
@@ -560,9 +505,7 @@ function Lane(index) {
           position = Math.floor((Math.random() * columns) / 3);
         } while (occupiedPositions.has(position));
         occupiedPositions.add(position);
-        vechicle.position.x =
-          (position * positionWidth * 3 + positionWidth / 2) * zoom -
-          (boardWidth * zoom) / 2;
+        vechicle.position.x = (position * positionWidth * 3 + positionWidth / 2) * zoom - (boardWidth * zoom) / 2;
         if (!this.direction) vechicle.rotation.z = Math.PI;
         this.mesh.add(vechicle);
         return vechicle;
@@ -606,7 +549,7 @@ function stopTimer() {
 function resetTimer() {
   stopTimer();
   timeInSeconds = 0;
-  count = 0; // 
+  count = 0; //
   document.getElementById("timerDisplay").innerText = "00:00";
   document.getElementById("counter").innerText = "0";
 }
@@ -618,14 +561,22 @@ document.querySelector("#retry").addEventListener("click", () => {
   endDOM.style.visibility = "hidden";
 });
 
-document
-  .getElementById("forward")
-  .addEventListener("click", () => move("forward"));
-document
-  .getElementById("backward")
-  .addEventListener("click", () => move("backward"));
-document.getElementById("left").addEventListener("click", () => move("left"));
-document.getElementById("right").addEventListener("click", () => move("right"));
+document.getElementById("forward").addEventListener("click", () => {
+  move("forward");
+  startTimer();
+});
+document.getElementById("backward").addEventListener("click", () => {
+  move("backward");
+  startTimer();
+});
+document.getElementById("left").addEventListener("click", () => {
+  move("left");
+  startTimer();
+});
+document.getElementById("right").addEventListener("click", () => {
+  move("right");
+  startTimer();
+});
 
 window.addEventListener("keydown", (event) => {
   if (event.keyCode == "38" && !gameOver) {
@@ -646,57 +597,29 @@ window.addEventListener("keydown", (event) => {
 function move(direction) {
   const finalPositions = moves.reduce(
     (position, move) => {
-      if (move === "forward")
-        return { lane: position.lane + 1, column: position.column };
-      if (move === "backward")
-        return { lane: position.lane - 1, column: position.column };
-      if (move === "left")
-        return { lane: position.lane, column: position.column - 1 };
-      if (move === "right")
-        return { lane: position.lane, column: position.column + 1 };
+      if (move === "forward") return { lane: position.lane + 1, column: position.column };
+      if (move === "backward") return { lane: position.lane - 1, column: position.column };
+      if (move === "left") return { lane: position.lane, column: position.column - 1 };
+      if (move === "right") return { lane: position.lane, column: position.column + 1 };
     },
     { lane: currentLane, column: currentColumn }
   );
 
   if (direction === "forward") {
-    if (
-      lanes[finalPositions.lane + 1].type === "forest" &&
-      lanes[finalPositions.lane + 1].occupiedPositions.has(
-        finalPositions.column
-      )
-    )
-      return;
+    if (lanes[finalPositions.lane + 1].type === "forest" && lanes[finalPositions.lane + 1].occupiedPositions.has(finalPositions.column)) return;
     if (!stepStartTimestamp) startMoving = true;
     addLane();
   } else if (direction === "backward") {
     if (finalPositions.lane === 0) return;
-    if (
-      lanes[finalPositions.lane - 1].type === "forest" &&
-      lanes[finalPositions.lane - 1].occupiedPositions.has(
-        finalPositions.column
-      )
-    )
-      return;
+    if (lanes[finalPositions.lane - 1].type === "forest" && lanes[finalPositions.lane - 1].occupiedPositions.has(finalPositions.column)) return;
     if (!stepStartTimestamp) startMoving = true;
   } else if (direction === "left") {
     if (finalPositions.column === 0) return;
-    if (
-      lanes[finalPositions.lane].type === "forest" &&
-      lanes[finalPositions.lane].occupiedPositions.has(
-        finalPositions.column - 1
-      )
-    )
-      return;
+    if (lanes[finalPositions.lane].type === "forest" && lanes[finalPositions.lane].occupiedPositions.has(finalPositions.column - 1)) return;
     if (!stepStartTimestamp) startMoving = true;
   } else if (direction === "right") {
     if (finalPositions.column === columns - 1) return;
-    if (
-      lanes[finalPositions.lane].type === "forest" &&
-      lanes[finalPositions.lane].occupiedPositions.has(
-        finalPositions.column + 1
-      )
-    )
-      return;
+    if (lanes[finalPositions.lane].type === "forest" && lanes[finalPositions.lane].occupiedPositions.has(finalPositions.column + 1)) return;
     if (!stepStartTimestamp) startMoving = true;
   }
   moves.push(direction);
@@ -705,7 +628,7 @@ function move(direction) {
 const crashSound = new Audio("crash.mp3");
 function playCrashSound() {
   crashSound.currentTime = 0;
-  crashSound.volume = 1.0; 
+  crashSound.volume = 1.0;
   crashSound.play().catch((e) => console.error("Audio play failed:", e));
 }
 
@@ -719,21 +642,13 @@ function animate(timestamp) {
   // Animate cars and trucks moving on the lane
   lanes.forEach((lane) => {
     if (lane.type === "car" || lane.type === "truck") {
-      const aBitBeforeTheBeginingOfLane =
-        (-boardWidth * zoom) / 2 - positionWidth * 2 * zoom;
-      const aBitAfterTheEndOFLane =
-        (boardWidth * zoom) / 2 + positionWidth * 2 * zoom;
+      const aBitBeforeTheBeginingOfLane = (-boardWidth * zoom) / 2 - positionWidth * 2 * zoom;
+      const aBitAfterTheEndOFLane = (boardWidth * zoom) / 2 + positionWidth * 2 * zoom;
       lane.vechicles.forEach((vechicle) => {
         if (lane.direction) {
-          vechicle.position.x =
-            vechicle.position.x < aBitBeforeTheBeginingOfLane
-              ? aBitAfterTheEndOFLane
-              : (vechicle.position.x -= (lane.speed / 16) * delta);
+          vechicle.position.x = vechicle.position.x < aBitBeforeTheBeginingOfLane ? aBitAfterTheEndOFLane : (vechicle.position.x -= (lane.speed / 16) * delta);
         } else {
-          vechicle.position.x =
-            vechicle.position.x > aBitAfterTheEndOFLane
-              ? aBitBeforeTheBeginingOfLane
-              : (vechicle.position.x += (lane.speed / 16) * delta);
+          vechicle.position.x = vechicle.position.x > aBitAfterTheEndOFLane ? aBitBeforeTheBeginingOfLane : (vechicle.position.x += (lane.speed / 16) * delta);
         }
       });
     }
@@ -746,14 +661,11 @@ function animate(timestamp) {
 
   if (stepStartTimestamp) {
     const moveDeltaTime = timestamp - stepStartTimestamp;
-    const moveDeltaDistance =
-      Math.min(moveDeltaTime / stepTime, 1) * positionWidth * zoom;
-    const jumpDeltaDistance =
-      Math.sin(Math.min(moveDeltaTime / stepTime, 1) * Math.PI) * 8 * zoom;
+    const moveDeltaDistance = Math.min(moveDeltaTime / stepTime, 1) * positionWidth * zoom;
+    const jumpDeltaDistance = Math.sin(Math.min(moveDeltaTime / stepTime, 1) * Math.PI) * 8 * zoom;
     switch (moves[0]) {
       case "forward": {
-        const positionY =
-          currentLane * positionWidth * zoom + moveDeltaDistance;
+        const positionY = currentLane * positionWidth * zoom + moveDeltaDistance;
         camera.position.y = initialCameraPositionY + positionY;
         dirLight.position.y = initialDirLightPositionY + positionY;
         chicken.position.y = positionY; // initial chicken position is 0
@@ -771,10 +683,7 @@ function animate(timestamp) {
         break;
       }
       case "left": {
-        const positionX =
-          (currentColumn * positionWidth + positionWidth / 2) * zoom -
-          (boardWidth * zoom) / 2 -
-          moveDeltaDistance;
+        const positionX = (currentColumn * positionWidth + positionWidth / 2) * zoom - (boardWidth * zoom) / 2 - moveDeltaDistance;
         camera.position.x = initialCameraPositionX + positionX;
         dirLight.position.x = initialDirLightPositionX + positionX;
         chicken.position.x = positionX; // initial chicken position is 0
@@ -782,10 +691,7 @@ function animate(timestamp) {
         break;
       }
       case "right": {
-        const positionX =
-          (currentColumn * positionWidth + positionWidth / 2) * zoom -
-          (boardWidth * zoom) / 2 +
-          moveDeltaDistance;
+        const positionX = (currentColumn * positionWidth + positionWidth / 2) * zoom - (boardWidth * zoom) / 2 + moveDeltaDistance;
         camera.position.x = initialCameraPositionX + positionX;
         dirLight.position.x = initialDirLightPositionX + positionX;
         chicken.position.x = positionX;
@@ -823,10 +729,7 @@ function animate(timestamp) {
   }
 
   // Hit test
-  if (
-    lanes[currentLane].type === "car" ||
-    lanes[currentLane].type === "truck"
-  ) {
+  if (lanes[currentLane].type === "car" || lanes[currentLane].type === "truck") {
     const chickenMinX = chicken.position.x - (chickenSize * zoom) / 2;
     const chickenMaxX = chicken.position.x + (chickenSize * zoom) / 2;
     const vechicleLength = { car: 60, truck: 105 }[lanes[currentLane].type];
@@ -838,11 +741,11 @@ function animate(timestamp) {
           const finalScore = document.getElementById("final-score");
           const finalTime = document.getElementById("final-time");
           const endDOM = document.getElementById("end");
-        
+
           // Tampilkan hasil skor dan waktu
           finalScore.innerText = `Final Score: ${document.getElementById("counter").innerText}`;
           finalTime.innerText = `Final Time: ${document.getElementById("timerDisplay").innerText}`;
-        
+
           // Tampilkan popup
           endDOM.style.visibility = "visible";
         }
